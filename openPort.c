@@ -14,9 +14,16 @@ int open_port(void) {
 	else {
 		fcntl(fd, F_SETFL, 0);
 	}
-	return (fd);
+	return fd;
+}
+int write_port(void) {
+	int n = write(open_port(), "ATZ\r", 4);
+	if (n < 0) {
+		fputs("write() of four bytes failed\n", stderr);
+	}
+	return n;
 }
 int main() {
-	open_port();
+	write_port();
 	return 0;
 }
